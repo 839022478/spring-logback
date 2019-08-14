@@ -1,0 +1,31 @@
+
+CREATE TABLE log_record (
+id NUMBER(20) NOT NULL ,
+time DATE NULL ,
+message CLOB NOT NULL ,
+level_string VARCHAR2(255 BYTE) NULL ,
+logger_name VARCHAR2(255 BYTE) NULL ,
+thread_name VARCHAR2(255 BYTE) NULL ,
+reference_flag NUMBER NULL ,
+caller_filename VARCHAR2(255 BYTE) NULL ,
+caller_class VARCHAR2(255 BYTE) NULL ,
+caller_method VARCHAR2(255 BYTE) NULL ,
+caller_line VARCHAR2(100 BYTE) NULL ,
+arg0 VARCHAR2(1500 BYTE) NULL ,
+arg1 VARCHAR2(2000 BYTE) NULL ,
+arg2 VARCHAR2(500 BYTE) NULL ,
+arg3 VARCHAR2(255 BYTE) NULL
+)
+;
+
+
+CREATE SEQUENCE log_record_id_seq MINVALUE 1 START WITH 1;
+
+CREATE TRIGGER log_record_id_seq_trig
+  BEFORE INSERT ON log_record
+  FOR EACH ROW
+  BEGIN
+    SELECT log_record_id_seq.NEXTVAL
+    INTO   :NEW.id
+    FROM   DUAL;
+  END;
